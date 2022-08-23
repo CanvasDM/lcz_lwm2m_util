@@ -1,0 +1,40 @@
+#
+# Copyright (c) 2022 Laird Connectivity LLC
+#
+# SPDX-License-Identifier: LicenseRef-LairdConnectivity-Clause
+#
+menuconfig LCZ_LWM2M_UTIL
+	bool "Enable LwM2M Utiliies"
+	depends on LCZ_LWM2M
+	select LCZ_SNPRINTK
+
+if LCZ_LWM2M_UTIL
+
+module=LCZ_LWM2M_UTIL
+module-str=LCZ_LWM2M_UTIL
+source "subsys/logging/Kconfig.template.log_config"
+
+config LCZ_LWM2M_UTIL_MANAGE_OBJ_INST
+	bool "Manage object instances using Gateway Object indices and callbacks"
+	default y if LCZ_LWM2M_GATEWAY_OBJ
+
+if LCZ_LWM2M_UTIL_MANAGE_OBJ_INST
+
+config LCZ_LWM2M_UTIL_MAX_NODES
+	int "Maximum number of [sensor] object instances per device [BT5/BT6]"
+	default 6
+	help
+	  Example 1: 3 temperature sensors, 1 battery level and 2 digital inputs
+	  Example 2: 1 ultrasonic [fill level] sensor and 1 battery level
+
+endif
+
+config LCZ_LWM2M_UTIL_CONFIG_DATA
+	bool "Support load/store of object/resource instance configuration data"
+	depends on FILE_SYSTEM_UTILITIES
+
+config LCZ_LWM2M_UTIL_CONFIG_DATA_MAX_SIZE
+	int "Maximum size of resource config/data stored in flash"
+	default 8
+
+endif # LCZ_LWM2M_UTIL
