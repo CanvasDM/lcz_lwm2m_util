@@ -23,6 +23,10 @@ LOG_MODULE_REGISTER(lcz_lwm2m_util, CONFIG_LCZ_LWM2M_UTIL_LOG_LEVEL);
 #include "lcz_lwm2m_gateway_obj.h"
 #endif
 
+#if defined(CONFIG_LCZ_LWM2M_UTIL_FWK_BROADCAST_ON_CREATE)
+#include "fwk_includes.h"
+#endif
+
 #include "lwm2m_resource_ids.h"
 #include "lcz_snprintk.h"
 #include "lcz_lwm2m.h"
@@ -346,13 +350,25 @@ static int create_obj_inst(int idx, uint16_t type, uint16_t instance)
 	char path[LWM2M_MAX_PATH_STR_LEN];
 	int r;
 
-	LCZ_SNPRINTK(path, "%u/%u", type, instance);
-	r = lwm2m_engine_create_obj_inst(path);
-	if (r < 0) {
-		return r;
-	}
+	do {
+		LCZ_SNPRINTK(path, "%u/%u", type, instance);
+		r = lwm2m_engine_create_obj_inst(path);
+		if (r < 0) {
+			break;
+		}
 
-	return creation_callback(idx, type, instance);
+		r = creation_callback(idx, type, instance);
+		if (r < 0) {
+			break;
+		}
+
+#if defined(CONFIG_LCZ_LWM2M_UTIL_FWK_BROADCAST_ON_CREATE)
+		FRAMEWORK_MSG_CREATE_AND_BROADCAST(FWK_ID_RESERVED, FMC_LWM2M_OBJ_CREATED);
+#endif
+
+	} while (0);
+
+	return r;
 }
 
 static int creation_callback(int idx, uint16_t type, uint16_t instance)

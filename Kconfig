@@ -18,6 +18,13 @@ config LCZ_LWM2M_UTIL_MANAGE_OBJ_INST
 	bool "Manage object instances using Gateway Object indices and callbacks"
 	default y if LCZ_LWM2M_GATEWAY_OBJ
 
+config LCZ_LWM2M_UTIL_FWK_BROADCAST_ON_CREATE
+	bool "Broadcast a framework message whne an object is created"
+	depends on FRAMEWORK
+	help
+	  Allow re-registration when using Cumulocity
+	  (allows observe to work properly).
+
 if LCZ_LWM2M_UTIL_MANAGE_OBJ_INST
 
 config LCZ_LWM2M_UTIL_MAX_NODES
