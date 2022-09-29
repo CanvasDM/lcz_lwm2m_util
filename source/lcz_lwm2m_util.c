@@ -259,7 +259,7 @@ int lcz_lwm2m_util_load_config(uint16_t type, uint16_t instance, uint16_t resour
 		LCZ_SNPRINTK(fname, CFG_PATH "%u.%u.%u", type, instance, resource);
 		r = (int)fsu_read_abs(fname, data, data_len);
 		if (r < 0) {
-			LOG_ERR("Unable to load %s", log_strdup(fname));
+			LOG_ERR("Unable to load %s", fname);
 			return r;
 		}
 
