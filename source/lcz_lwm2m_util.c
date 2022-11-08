@@ -5,31 +5,30 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#include <logging/log.h>
+#include <zephyr/logging/log.h>
 LOG_MODULE_REGISTER(lcz_lwm2m_util, CONFIG_LCZ_LWM2M_UTIL_LOG_LEVEL);
 
 /**************************************************************************************************/
 /* Includes                                                                                       */
 /**************************************************************************************************/
-#include <zephyr.h>
-#include <init.h>
-#include <lcz_lwm2m.h>
+#include <zephyr/zephyr.h>
+#include <zephyr/init.h>
+#include <zephyr/net/lwm2m.h>
 
 #if defined(CONFIG_LCZ_LWM2M_UTIL_CONFIG_DATA)
-#include "file_system_utilities.h"
+#include <file_system_utilities.h>
 #endif
 
 #if defined(CONFIG_LCZ_LWM2M_UTIL_MANAGE_OBJ_INST)
-#include "lcz_lwm2m_gateway_obj.h"
+#include <lcz_lwm2m_gateway_obj.h>
 #endif
 
 #if defined(CONFIG_LCZ_LWM2M_UTIL_FWK_BROADCAST_ON_CREATE)
-#include "fwk_includes.h"
+#include <fwk_includes.h>
 #endif
 
-#include "lwm2m_resource_ids.h"
-#include "lcz_snprintk.h"
-#include "lcz_lwm2m.h"
+#include <lwm2m_resource_ids.h>
+#include <lcz_snprintk.h>
 #include "lcz_lwm2m_util.h"
 
 /**************************************************************************************************/
@@ -46,7 +45,7 @@ LOG_MODULE_REGISTER(lcz_lwm2m_util, CONFIG_LCZ_LWM2M_UTIL_LOG_LEVEL);
 /* The total number of object instances [sensors] per gateway object instance */
 #define MAX_NODES CONFIG_LCZ_LWM2M_UTIL_MAX_NODES
 
-#define MAX_INSTANCES CONFIG_LCZ_LWM2M_GATEWAY_MAX_INSTANCES
+#define MAX_INSTANCES CONFIG_LWM2M_GATEWAY_MAX_INSTANCES
 
 enum lwm2m_create_state { CREATE_ALLOW = 0, CREATE_OK = 1, CREATE_FAIL = 2 };
 

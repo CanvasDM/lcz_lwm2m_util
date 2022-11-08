@@ -5,7 +5,7 @@
 #
 menuconfig LCZ_LWM2M_UTIL
 	bool "Enable LwM2M Utiliies"
-	depends on LCZ_LWM2M
+	depends on LWM2M
 	select LCZ_SNPRINTK
 
 if LCZ_LWM2M_UTIL

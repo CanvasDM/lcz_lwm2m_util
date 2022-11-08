@@ -13,11 +13,10 @@
 /**************************************************************************************************/
 /* Includes                                                                                       */
 /**************************************************************************************************/
-#include <zephyr.h>
-#include <sys/slist.h>
-#include <bluetooth/addr.h>
-
-#include "lcz_lwm2m.h"
+#include <zephyr/zephyr.h>
+#include <zephyr/sys/slist.h>
+#include <zephyr/bluetooth/addr.h>
+#include <zephyr/net/lwm2m.h>
 
 #ifdef __cplusplus
 extern "C" {
